@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  server:
+    image: server-image
+    container_name: server-container
+    build: ./server
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./server:/app:rw
+
