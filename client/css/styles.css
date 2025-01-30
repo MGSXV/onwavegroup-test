@@ -10935,3 +10935,12 @@ header.masthead .bg-circle-4 {
 .file-upload-area input[type="file"] {
 	display: none;
 }
+
+.cursor-pointer {
+	cursor: pointer;
+}
+
+.uploads-container img {
+	cursor: grab;
+	object-fit: cover;
+}

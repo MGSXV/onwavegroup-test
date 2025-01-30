@@ -167,24 +167,22 @@
     <section>
       <div class="container px-5">
         <div class="row gy-3 align-items-center text-center p-5">
-          <h2 class="display-4">Upload file here</h2>
-          <div
-            class="file-upload-area user-select-none text-center"
-            id="file-upload-area"
-          >
-            <p>Drag & drop a file here or click to select a file</p>
-            <span id="chosen-file-name"></h3>
-          </div>
-          <input
-            type="file"
-            hidden
-            id="file-input"
-            class="form-control"
-            accept="image/*"
-          />
+          	<h2 class="display-4">Upload file here</h2>
+          	<div class="file-upload-area user-select-none text-center" id="file-upload-area">
+          		<p>Drag & drop a file here or click to select a file</p>
+           		<span id="chosen-file-name"></h3>
+          	</div>
+          	<input type="file" hidden id="file-input" class="form-control" accept="image/*" />
         </div>
       </div>
     </section>
+	<section>
+		<div class="container px-5">
+			<div class="row gy-3 align-items-center text-center p-5">
+				<div id="uploads-container" class="gx-5 gy-5 uploads-container"></div>
+			</div>
+		</div>
+	</section>
     <!-- Footer-->
     <footer class="py-5 bg-black">
       <div class="container px-5">
@@ -199,7 +197,10 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <!-- JQuery Json viewer -->
     <script src="https://cdn.jsdelivr.net/npm/jquery.json-viewer@1.5.0/json-viewer/jquery.json-viewer.min.js"></script>
-    <!-- JS-->
+    
+	<!-- JQury UI -->
+	<script src="https://code.jquery.com/ui/1.14.1/jquery-ui.min.js"></script>
+	<!-- JS-->
     <script src="js/scripts.js"></script>
   </body>
 </html>

@@ -1,9 +1,19 @@
 $(document).ready(function() {
+	let images = [];
 	uploadImage();
+	viewAllUploads(images);
 	getEvenet().then(data => {
 		$('#event').text(data.text);
 		$('#json-container').jsonViewer(data);
 	});
+	getAllUplaods().then(data => {
+		images = data.images
+		console.log(images);
+		viewAllUploads(images);
+	}).catch(error => {
+		console.error('Error:', error)
+	});
+	drag();
 });
 
 async function getEvenet() {
@@ -39,11 +49,43 @@ function uploadImage() {
 		})
 		.then(response => response.json())
 		.then(data => {
-			$('#image-container').html(`<img src="${data.url}" alt="Uploaded image" />`);
+			alert('Image uploaded successfully');
 		})
 		.catch(error => {
 			alert('Error uploading image');
 			console.error('Error:', error)
+		}).finally(() => {
+			$fileInput.val('');
+			$('#chosen-file-name').text('');
 		});
 	});
+}
+
+async function getAllUplaods() {
+	const response = await fetch('http://localhost:3000/uploads');
+	const data = await response.json();
+	return data;
+}
+
+function viewAllUploads(uploads) {
+	const $uploadsContainer = $('#uploads-container');
+	$uploadsContainer.empty();
+	uploads.forEach(upload => {
+		const $img = $('<img>')
+			.attr('src', upload)
+			.addClass('col-lg-3 col-md-4 col-sm-6 col-12 cursor-pointer');
+		$uploadsContainer.append($img);
+	});
+}
+
+function drag() {
+	$("#uploads-container img").draggable({
+		revert: true,
+		cursor: "move",
+	});
+	$("#uploads-container").sortable({
+		items: "img"
+	});
+	$("#uploads-container").disableSelection();
+
 }
