@@ -9,4 +9,35 @@ services:
       - "3000:3000"
     volumes:
       - ./server:/app:rw
-
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: users
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+  mysql:
+    image: mysql:5.7
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: users
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./mysql:/var/lib/mysql:rw
+      - ./database:/docker-entrypoint-initdb.d:ro
+    restart: always
+    # entrypoint: ["/bin/sh", "/docker-entrypoint-initdb.d/init-db.sh"]  
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin-container
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: user
+      PMA_PASSWORD: password
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql

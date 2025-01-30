@@ -3,6 +3,7 @@ import fs from 'fs';
 import cors from 'cors';
 import upload from './utils/multer_config';
 import path from 'path';
+import pool from './utils/db';
 
 const DESTINATION = './upload_images/';
 
@@ -51,6 +52,37 @@ app.use('/uploads/:filename', (req: Request, res: Response) => {
 	}
 })
 
+app.post('/add-user', async (_: Request, res: Response) => {
+	try {
+		const [rows] = await pool.query(`CALL addUser('${generateRandomEmail()}', '${generateRandomPassword()}', 'admin', 1)`);
+		res.status(200).send('User added successfully');
+	} catch (error) {
+		console.error(error);
+        res.status(500).send('Error adding user');
+	}
+});
+
+app.get('/users', async (_: Request, res: Response) => {
+	try {
+		const [rows] = await pool.query('SELECT * FROM users');
+		res.status(200).json(rows);
+	} catch (error) {
+		console.error(error);
+		res.status(500).send('Error getting users');
+	}
+});
+
 app.listen(port, () => {
 	console.log(`Server is running on http://localhost:${port}`);
 });
+
+// generate ranodm email
+function generateRandomEmail() {
+	const randomString = Math.random().toString(36).substring(2, 15);
+	return `${randomString}@mail.com`
+}
+
+// generate random password
+function generateRandomPassword() {
+	return Math.random().toString(36).substring(2, 15);
+}
